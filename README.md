@@ -28,7 +28,6 @@ Refer to `schema-diagram.md` for table structure and relationships.
 - WHERE
 - HAVING
 - Aggregate Functions
-- Subqueries
 
 ## Tools Used
 - MySQL
