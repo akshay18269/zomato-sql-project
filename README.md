@@ -1,23 +1,36 @@
 # Zomato SQL Data Analysis Project
 
-## Project Overview
-This project analyzes Zomato restaurant data using SQL queries.
+## Project Objective
+To analyze Zomato restaurant data and extract business insights using SQL queries.
 
-## Dataset Files
-- Zomato_Dataset.csv
-- Country-Code.csv
+## Dataset Description
+The dataset contains:
+- Restaurant details
+- Country information
+- Ratings
+- Cost for two
+- Online delivery availability
 
-## SQL File
-- zomato.sql
+## Database Schema
+Refer to `schema-diagram.md` for table structure and relationships.
 
-## Key Analysis Done
-- Restaurant count by country
-- Average ratings
-- Online delivery analysis
-- Cost distribution
-- Top cities by restaurants
+## Key Business Questions Solved
+1. Total restaurants by country
+2. Average rating by city
+3. Online delivery availability percentage
+4. Cost distribution analysis
+5. Top cities with highest restaurant count
+
+## SQL Concepts Used
+- SELECT
+- GROUP BY
+- JOIN
+- WHERE
+- HAVING
+- Aggregate Functions
+- Subqueries
 
 ## Tools Used
-- SQL
+- MySQL
 - GitHub
-- CSV Dataset
+
