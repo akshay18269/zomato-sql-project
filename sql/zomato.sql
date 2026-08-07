@@ -185,7 +185,7 @@ ORDER BY City, city_rank;
  
  
 -- Q11. RUNNING TOTAL OF RESTAURANTS PER COUNTRY
--- Uses a window function (SUM OVER) to build a cumulative count,
+-- window function (SUM OVER) to build a cumulative count,
 -- useful for spotting concentration/growth trends by country.
 WITH country_counts AS (
     SELECT
@@ -207,7 +207,7 @@ ORDER BY restaurant_count DESC;
  
  
 -- Q12. RESTAURANTS PRICED ABOVE THEIR CITY'S AVERAGE COST FOR TWO
--- Uses a correlated subquery to compare each restaurant against
+-- correlated subquery to compare each restaurant against
 -- the average cost within its own city (not the global average).
 SELECT
     z.RestaurantName,
@@ -228,7 +228,7 @@ ORDER BY z.City, z.Average_Cost_for_two DESC;
  
  
 -- Q13. TOP CITY PER COUNTRY BY RESTAURANT COUNT
--- Combines CTE + window function — shows the single
+-- CTE + window function 
 -- highest-restaurant-count city for every country.
 
 WITH city_counts AS (
