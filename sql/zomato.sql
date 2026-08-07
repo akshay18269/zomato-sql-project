@@ -157,3 +157,101 @@ group by
         when Country = 'India' then 'India'
         else 'Other Countries'
     end ;
+
+
+-- Q10. TOP 3 RESTAURANTS BY RATING IN EACH CITY
+-- Uses DENSE_RANK() to handle tied ratings fairly, partitioned per city.
+WITH ranked_restaurants AS (
+    SELECT
+        RestaurantName,
+        City,
+        Rating,
+        Votes,
+        DENSE_RANK() OVER (
+            PARTITION BY City
+            ORDER BY Rating DESC, Votes DESC
+        ) AS city_rank
+    FROM zomato_dataset
+)
+SELECT
+    City,
+    RestaurantName,
+    Rating,
+    Votes,
+    city_rank
+FROM ranked_restaurants
+WHERE city_rank <= 3
+ORDER BY City, city_rank;
+ 
+ 
+-- Q11. RUNNING TOTAL OF RESTAURANTS PER COUNTRY
+-- Uses a window function (SUM OVER) to build a cumulative count,
+-- useful for spotting concentration/growth trends by country.
+WITH country_counts AS (
+    SELECT
+        cc.Country,
+        COUNT(z.RestaurantID) AS restaurant_count
+    FROM zomato_dataset z
+    JOIN country_code cc
+        ON z.CountryCode = cc.`Country Code`
+    GROUP BY cc.Country
+)
+SELECT
+    Country,
+    restaurant_count,
+    SUM(restaurant_count) OVER (
+        ORDER BY restaurant_count DESC
+    ) AS running_total_restaurants
+FROM country_counts
+ORDER BY restaurant_count DESC;
+ 
+ 
+-- Q12. RESTAURANTS PRICED ABOVE THEIR CITY'S AVERAGE COST FOR TWO
+-- Uses a correlated subquery to compare each restaurant against
+-- the average cost within its own city (not the global average).
+SELECT
+    z.RestaurantName,
+    z.City,
+    z.Average_Cost_for_two,
+    (
+        SELECT ROUND(AVG(z2.Average_Cost_for_two), 2)
+        FROM zomato_dataset z2
+        WHERE z2.City = z.City
+    ) AS city_avg_cost
+FROM zomato_dataset z
+WHERE z.Average_Cost_for_two > (
+    SELECT AVG(z3.Average_Cost_for_two)
+    FROM zomato_dataset z3
+    WHERE z3.City = z.City
+)
+ORDER BY z.City, z.Average_Cost_for_two DESC;
+ 
+ 
+-- Q13. TOP CITY PER COUNTRY BY RESTAURANT COUNT
+-- Combines CTE + window function — shows the single
+-- highest-restaurant-count city for every country.
+
+WITH city_counts AS (
+    SELECT
+        cc.Country,
+        z.City,
+        COUNT(*) AS restaurant_count,
+        ROW_NUMBER() OVER (
+            PARTITION BY cc.Country
+            ORDER BY COUNT(*) DESC
+        ) AS rn
+    FROM zomato_dataset z
+    JOIN country_code cc
+        ON z.CountryCode = cc.`Country Code`
+    GROUP BY cc.Country, z.City
+)
+SELECT
+    Country,
+    City AS top_city,
+    restaurant_count
+FROM city_counts
+WHERE rn = 1
+ORDER BY restaurant_count DESC;
+ 
+ 
+
