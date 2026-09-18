@@ -31,6 +31,6 @@ Refer to `schema-diagram.md` for table structure and relationships.
 - Subqueries
 
 ## Tools Used
-- MySQL
+- MSSQL
 - GitHub
 
