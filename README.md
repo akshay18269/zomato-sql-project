@@ -3,34 +3,27 @@
 ## Project Objective
 To analyze Zomato restaurant data and extract business insights using SQL queries.
 
-## Dataset Description
-The dataset contains:
-- Restaurant details
-- Country information
-- Ratings
-- Cost for two
-- Online delivery availability
-
-## Database Schema
-Refer to `schema-diagram.md` for table structure and relationships.
-
 ## Key Business Questions Solved
+
 1. Total restaurants by country
 2. Average rating by city
 3. Online delivery availability percentage
 4. Cost distribution analysis
 5. Top cities with highest restaurant count
+6. Top-rated restaurant per city (using ROW_NUMBER)
+7. Running total of restaurants by country (using window functions)
+8. Restaurants priced above their city's average (using correlated subqueries)
 
 ## SQL Concepts Used
-- SELECT
-- GROUP BY
-- JOIN
-- WHERE
-- HAVING
+
+- SELECT, WHERE, GROUP BY, HAVING, JOIN
 - Aggregate Functions
+- Window Functions (ROW_NUMBER, RANK, DENSE_RANK)
+- Common Table Expressions (CTEs)
+- Correlated Subqueries
 - Subqueries
 
 ## Tools Used
-- MSSQL
-- GitHub
 
+- SQL Server (SSMS)
+- GitHub
